@@ -5,11 +5,15 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node_modules_${{ hashFiles('**/yarn.lock') }}
       - name: Install npm dependencies
         run: npm install
       - name: Build Android Release
         run: |
-          chmod +x ./gradlew && cd android && ./gradlew assembleRelease
+          cd android && chmod +x ./gradlew && ./gradlew assembleRelease
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
