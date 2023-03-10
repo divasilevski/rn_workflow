@@ -1,0 +1,25 @@
+name: Android to AppCenter
+on: workflow_dispatch
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: node_modules_${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Build Android Release
+        run: |
+          cd android && chmod +x ./gradlew && ./gradlew assembleRelease
+
+    - name: Upload artefact to App Center
+      uses: wzieba/AppCenter-Github-Action@v1
+      with:
+        appName: divasilevski/rn_workflow_android
+        token: ${{secrets.APP_CENTER_TOKEN_ANDROID}}
+        file: app/build/outputs/apk/release/app-release-unsigned.apk
