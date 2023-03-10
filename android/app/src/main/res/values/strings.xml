@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">rn_workflow</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">o9nXXS1_PauL2NFV75SSxnWTSmCD_fI0EFp7C</string>
 </resources>
